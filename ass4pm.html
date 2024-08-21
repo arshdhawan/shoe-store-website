@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakFreak</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .menu {
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        nav {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #333;
+            color: #fff;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav.hidden {
+            display: none;
+        }
+
+        nav a {
+            color: #fff;
+            padding: 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 18px;
+            border-bottom: 1px solid #444;
+        }
+
+        nav a:hover {
+            background-color: #444;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        #search {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #search-input {
+            width: 80%;
+            max-width: 600px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #search-input::placeholder {
+            color: #888;
+        }
+
+        .product {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            display: inline-block;
+            width: calc(33.333% - 30px);
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .product img {
+            max-width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .product img:hover {
+            transform: scale(1.05);
+        }
+
+        .product h2 {
+            font-size: 18px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .product p {
+            font-size: 16px;
+            color: #555;
+            margin: 5px 0;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu" id="menu-toggle">
+            ☰
+        </div>
+        <nav id="nav-menu" class="hidden">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+        <h1>SneakFreak</h1>
+    </header>
+
+    <main>
+        <section id="search">
+            <input type="text" id="search-input" placeholder="Search for shoes...">
+        </section>
+
+        <section id="products">
+            <!-- Product listings will be dynamically inserted here -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SneakFreak. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Sample hyped shoe data
+        const shoes = [
+            { id: 1, name: 'ADIDAS YEEZY 350 V2 CARBON BELUGA', price: '₹29,999', image: 'https://crepdogcrew.com/cdn/shop/files/EditsbyAhmar01_57b3126b-b12c-4e01-8c82-6afac5cbed48.png?v=1716190605&width=1000' },
+            { id: 2, name: 'JORDAN 1 RETRO HIGH OG LOST AND FOUND', price: '₹24,999', image: 'https://crepdogcrew.com/cdn/shop/products/AJ1HighLost_Found.jpg?v=1667562977&width=1400' },
+            { id: 3, name: 'ADIDAS SAMBA OG BLACK WHITE GUM', price: '₹14,999', image: 'https://crepdogcrew.com/cdn/shop/files/1_81971b8f-12b6-4f17-9bec-d534d2f82d04.png?v=1713864483&width=1000' },
+            { id: 4, name: 'ADIDAS YEEZY 700 V3 AZAEL', price: '₹44,999', image: 'https://crepdogcrew.com/cdn/shop/files/1_38f79394-17c6-4aad-bfaf-2d409314510a.png?v=1694869608&width=1000' },
+            { id: 5, name: 'JORDAN 4 RETRO SB PINE GREEN', price: '₹22,999', image: 'https://crepdogcrew.com/cdn/shop/files/1_219e0509-45bb-412e-a2b7-6e51f5baa446.png?v=1714040531&width=1000' },
+            { id: 6, name: 'ADIDAS YEEZY SLIDE AZURE', price: '₹18,999', image: 'https://crepdogcrew.com/cdn/shop/files/1_5265ce95-7a82-41f4-bb58-bf91ecbe02e5.png?v=1707816562&width=1000' },
+            { id: 7, name: 'JORDAN 1 LOW ALTERNATE ROYAL TOE', price: '₹11,999', image: 'https://crepdogcrew.com/cdn/shop/files/1_3b5d2e5e-9367-4413-a975-9749bb6bc59c.png?v=1710484515&width=1000' },
+            { id: 8, name: 'JORDAN 1 RETRO HIGH TRAVIS SCOTT', price: '₹127,999', image: 'https://crepdogcrew.com/cdn/shop/files/1_232392d0-1dae-403f-b625-9ca70e43ce8f.png?v=1714050574&width=1000' },
+            { id: 9, name: 'NIKE AIR FORCE 1 LOW DRAKE NOCTA CERTIFIED LOVER BOY', price: '₹23,999', image: 'https://crepdogcrew.com/cdn/shop/products/Drake_sNOCTAxNikeAirForce1LowCertifiedLoverBoy.jpg?v=1671784195&width=1400' },
+            { id: 10, name: 'NIKE AIR FORCE 1 LOW SP AMBUSH BLACK', price: '₹23,999', image: 'https://crepdogcrew.com/cdn/shop/files/1_d1c93cb0-8c7b-4e24-9907-d9e17fa85ff0.png?v=1709729183&width=1000' },
+            { id: 11, name: 'NIKE SB DUNK LOW THE POWERPUFF GIRLS BUTTERCUP', price: '₹31,999', image: 'https://crepdogcrew.com/cdn/shop/files/1_29f40504-f7b1-4f0f-8ce3-84ddf78343e0.png?v=1710512001&width=1000' },
+            { id: 12, name: 'LOUIS VUITTON NIKE AIR FORCE 1 LOW BY VIRGIL ABLOH WHITE ROYAL', price: '₹599,999', image: 'https://crepdogcrew.com/cdn/shop/files/palm_25.png?v=1723794982&width=1000' },
+            { id: 13, name: 'NIKE AIR FORCE 1 LOW SP TIFFANY AND CO.', price: '₹125,999', image: 'https://crepdogcrew.com/cdn/shop/files/1_be9f860d-b447-4741-8b09-54f5388d3e26.png?v=1712042488&width=1000' },
+            { id: 14, name: 'JORDAN 1 HIGH OG SPIDERMAN ACROSS THE SPIDER-VERSE', price: '₹27,999', image: 'https://crepdogcrew.com/cdn/shop/files/AirJordan1RetroHighOGSPNEXTCHAPTER.png?v=1683613375&width=1400' },
+            { id: 15, name: 'JORDAN 1 LOW ALTERNATE BRED TOE', price: '₹15,999', image: 'https://crepdogcrew.com/cdn/shop/files/AirJordan1LowAlternateBredToe.png?v=1683549209&width=1400' },
+        ];
+
+        // Render products
+        function renderProducts(filteredShoes = shoes) {
+            const productsContainer = document.getElementById('products');
+            productsContainer.innerHTML = '';
+            filteredShoes.forEach(shoe => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `
+                    <img src="${shoe.image}" alt="${shoe.name}">
+                    <h2>${shoe.name}</h2>
+                    <p>${shoe.price}</p>
+                `;
+                productsContainer.appendChild(productDiv);
+            });
+        }
+
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', (event) => {
+            const searchTerm = event.target.value.toLowerCase();
+            const filteredShoes = shoes.filter(shoe => shoe.name.toLowerCase().includes(searchTerm));
+            renderProducts(filteredShoes);
+        });
+
+        // Toggle menu
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('hidden');
+        });
+
+        // Initial render
+        renderProducts();
+    </script>
+</body>
+</html>
